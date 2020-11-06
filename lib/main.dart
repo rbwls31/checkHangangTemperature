@@ -43,12 +43,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Future<Post> post;
 
-  var number_1 = "";
-  var number_2 = "";
-  var number_3 = "";
-  var number_4 = "";
-  var number_5 = "";
-  var number_6 = "";
+  var number_1 = "0";
+  var number_2 = "0";
+  var number_3 = "0";
+  var number_4 = "0";
+  var number_5 = "0";
+  var number_6 = "0";
 
   @override
   void initState() {
@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
           child: Scaffold(
               backgroundColor: Colors.transparent,
               body:
-                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                 Container(
                     margin: const EdgeInsets.only(top: 150),
                     alignment: Alignment.center,
@@ -94,32 +94,32 @@ class _MyAppState extends State<MyApp> {
                 IconButton(
                     icon: Center(
                         child: Stack(children: [
-                      Center(
-                          child: Opacity(
-                              opacity: 0.4,
-                              child: Image.asset("images/water.png"))),
-                      Container(
-                          alignment: Alignment.center,
-                          child: FutureBuilder<Post>(
-                            future: post,
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return Text(
-                                  snapshot.data.temp + "℃",
-                                  style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      height: 7),
-                                );
-                              } else if (snapshot.hasError) {
-                                return Text("${snapshot.error}");
-                              }
-                              // 기본적으로 로딩 Spinner를 보여줍니다.
-                              return CircularProgressIndicator();
-                            },
-                          ))
-                    ])),
+                          Center(
+                              child: Opacity(
+                                  opacity: 0.4,
+                                  child: Image.asset("images/water.png"))),
+                          Container(
+                              alignment: Alignment.center,
+                              child: FutureBuilder<Post>(
+                                future: post,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Text(
+                                      snapshot.data.temp + "℃",
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          height: 7),
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Text("${snapshot.error}");
+                                  }
+                                  // 기본적으로 로딩 Spinner를 보여줍니다.
+                                  return CircularProgressIndicator();
+                                },
+                              ))
+                        ])),
                     iconSize: 180,
                     onPressed: () {
                       var list = new List<int>.generate(
@@ -136,48 +136,70 @@ class _MyAppState extends State<MyApp> {
                       });
                     }),
                 Container(
-                  child: Text("클릭"),
                   height: 120,
                 ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CircleAvatar(
-                          child: Text(number_1),
-                          backgroundColor: setColor(int.parse(number_1))),
-                      CircleAvatar(
-                          child: Text(number_2),
-                          backgroundColor: setColor(int.parse(number_2))),
-                      CircleAvatar(
-                          child: Text(number_3),
-                          backgroundColor: setColor(int.parse(number_3))),
-                      CircleAvatar(
-                          child: Text(number_4),
-                          backgroundColor: setColor(int.parse(number_4))),
-                      CircleAvatar(
-                          child: Text(number_5),
-                          backgroundColor: setColor(int.parse(number_5))),
-                      CircleAvatar(
-                          child: Text(number_6),
-                          backgroundColor: setColor(int.parse(number_6))),
-                    ]),
+                Opacity(
+                    opacity: setOpacity(int.parse(number_1)),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          CircleAvatar(
+                              child: Text(number_1, style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),),
+                              backgroundColor: setColor(int.parse(number_1))),
+                          CircleAvatar(
+                              child: Text(number_2, style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),),
+                              backgroundColor: setColor(int.parse(number_2))),
+                          CircleAvatar(
+                              child: Text(number_3, style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),),
+                              backgroundColor: setColor(int.parse(number_3))),
+                          CircleAvatar(
+                              child: Text(number_4, style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),),
+                              backgroundColor: setColor(int.parse(number_4))),
+                          CircleAvatar(
+                              child: Text(number_5, style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),),
+                              backgroundColor: setColor(int.parse(number_5))),
+                          CircleAvatar(
+                              child: Text(number_6, style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),),
+                              backgroundColor: setColor(int.parse(number_6))),
+                        ])),
               ])),
         ),
       ]),
     );
   }
 
+  double setOpacity(int number) {
+    if(number == 0) {
+      return 0;
+    }
+    else {
+      return 1;
+    }
+  }
+
   Color setColor(int number) {
     if (number <= 10) {
-      return Colors.yellow;
+      return Colors.yellow.withOpacity(0.4);
     } else if (number <= 20) {
-      return Colors.blue;
+      return Colors.blue.withOpacity(0.4);
     } else if (number <= 30) {
-      return Colors.red;
+      return Colors.red.withOpacity(0.4);
     } else if (number <= 40) {
-      return Colors.black;
+      return Colors.black.withOpacity(0.4);
     } else {
-      return Colors.green;
+      return Colors.green.withOpacity(0.4);
     }
   }
 }
